@@ -1,0 +1,16 @@
+{
+  "name": "rekog",
+  "version": "1.0.0",
+  "description": "yarp",
+  "main": "main.js",
+  "dependencies": {
+    "rpio": "^0.9.17",
+    "time": "^0.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
+}
