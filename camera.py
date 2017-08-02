@@ -6,11 +6,19 @@ import sys
 import base64
 import json
 
+deviceId = 'raspberry_pi'
 def upload(filename):
     endpoint = "https://eai5udmepa.execute-api.us-east-1.amazonaws.com/latest/match"
     file = open(filename, 'rb')
-    base64Image = base64.b64encode(file.read()).decode()
-    payload = base64Image
+    base64Image = base64.b64encode(file.read()).decode('UTF-8')
+    payload = '{"numImages": 2,'
+    payload = payload + '"images": ['
+    payload = payload + '{"data": "' + base64Image + '"}'
+    payload = payload + ', {"data": "' + base64Image + '"}'
+    payload = payload + ', {"data": "' + base64Image + '"}'
+    payload = payload + ', {"data": "' + base64Image + '"}'
+    payload = payload + '],'
+    payload = payload + '"deviceId": "' + deviceId + '"}'
     headers = {'Content-Type': 'application/json'}
     return requests.post(endpoint, headers=headers, json=payload)
 
@@ -42,9 +50,8 @@ try:
                 after = time.time()
                 print("request returned in " + str(after - before) + " seconds")
 
-                jsonResponse = json.loads(response.text)
-                print("Match: " + jsonResponse['MatchId'])
-                print("Error: " + jsonResponse['Error'])
+                print(response)
+                print(response.text)
                 
                 key = cv2.waitKey(20)
                 if key == 27:
